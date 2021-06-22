@@ -118,7 +118,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 // Header Component
-const Header = () => {
+const Header = ({ value, setValue, selectedIndex, setSelectedIndex }) => {
   const classes = useStyles();
   const theme = useTheme();
 
@@ -128,12 +128,9 @@ const Header = () => {
 
   const matches = useMediaQuery(theme.breakpoints.down("md"));
 
-  const [value, setValue] = useState(0);
   // State for Menu
   const [anchorEl, setAnchorEl] = useState(null);
   const [openMenu, setOpenMenu] = useState(false);
-
-  const [selectedIndex, setSelectedIndex] = useState(0);
 
   const menuOptions = [
     {
@@ -197,7 +194,7 @@ const Header = () => {
           break;
       }
     });
-  }, [value, menuOptions, selectedIndex, routes]);
+  }, [value, menuOptions, selectedIndex, routes, setSelectedIndex, setValue]);
 
   const handleChange = (e, newValue) => {
     setValue(newValue);
