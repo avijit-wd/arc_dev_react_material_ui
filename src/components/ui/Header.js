@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import useScrollTrigger from "@material-ui/core/useScrollTrigger";
@@ -73,6 +73,9 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: "50px",
     marginRight: "25px",
     height: "45px",
+    "&:hover": {
+      backgroundColor: theme.palette.secondary.light,
+    },
   },
   menu: {
     backgroundColor: theme.palette.common.blue,
@@ -132,52 +135,56 @@ const Header = ({ value, setValue, selectedIndex, setSelectedIndex }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [openMenu, setOpenMenu] = useState(false);
 
-  const menuOptions = [
-    {
-      name: "Services",
-      link: "/services",
-      activeIndex: 1,
-      selectedIndex: 0,
-    },
+  const menuOptions = useMemo(() => {
+    return [
+      {
+        name: "Services",
+        link: "/services",
+        activeIndex: 1,
+        selectedIndex: 0,
+      },
 
-    {
-      name: "Custom Software Development",
-      link: "/customsoftware",
-      activeIndex: 1,
-      selectedIndex: 1,
-    },
-    {
-      name: "Mobile App Development",
-      link: "/mobileapps",
-      activeIndex: 1,
-      selectedIndex: 3,
-    },
-    {
-      name: "Website Development",
-      link: "/websites",
-      activeIndex: 1,
-      selectedIndex: 4,
-    },
-  ];
+      {
+        name: "Custom Software Development",
+        link: "/customsoftware",
+        activeIndex: 1,
+        selectedIndex: 1,
+      },
+      {
+        name: "Mobile App Development",
+        link: "/mobileapps",
+        activeIndex: 1,
+        selectedIndex: 3,
+      },
+      {
+        name: "Website Development",
+        link: "/websites",
+        activeIndex: 1,
+        selectedIndex: 4,
+      },
+    ];
+  }, []);
 
-  const routes = [
-    { name: "Home", link: "/", activeIndex: 0 },
-    {
-      name: "Services",
-      link: "/services",
-      activeIndex: 1,
-      ariaOwns: anchorEl ? "simple-menu" : undefined,
-      ariaPopup: anchorEl ? true : undefined,
-      mouseOver: (e) => handleClick(e),
-    },
-    {
-      name: "Revolution",
-      link: "/revolution",
-      activeIndex: 2,
-    },
-    { name: "About us", link: "/about", activeIndex: 3 },
-    { name: "Contact Us", link: "/contact", activeIndex: 4 },
-  ];
+  const routes = useMemo(() => {
+    return [
+      { name: "Home", link: "/", activeIndex: 0 },
+      {
+        name: "Services",
+        link: "/services",
+        activeIndex: 1,
+        ariaOwns: anchorEl ? "simple-menu" : undefined,
+        ariaPopup: anchorEl ? true : undefined,
+        mouseOver: (e) => handleClick(e),
+      },
+      {
+        name: "Revolution",
+        link: "/revolution",
+        activeIndex: 2,
+      },
+      { name: "About us", link: "/about", activeIndex: 3 },
+      { name: "Contact Us", link: "/contact", activeIndex: 4 },
+    ];
+  }, [anchorEl]);
 
   useEffect(() => {
     [...menuOptions, ...routes].forEach((route) => {
